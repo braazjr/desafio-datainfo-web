@@ -1,0 +1,97 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Parâmetros</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Usuários</li>
+  </ol>
+</nav>
+
+<div class="container-fluid">
+  <!-- <div class="card">
+    <div class="card-header">
+      Lista de Usuários
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="nome">Nome:</label>
+              <input type="text" class="form-control" id="nome">
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <label for="situacao">Situação:</label>
+              <select class="form-control" id="situacao">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <label for="perfil">Perfil:</label>
+              <select class="form-control" id="perfil">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary float-right">Pesquisar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div> -->
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-6">
+          <button type="submit" class="btn btn-primary float-left">Incluir</button>
+        </div>
+        <div class="col-6">
+          <button type="submit" class="btn btn-primary float-right">Pesquisar</button>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-12">
+          <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">E-mail</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Perfil</th>
+                <th scope="col">Habilitado</th>
+                <th scope="col">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let usuario of usuarios">
+                <td>{{ usuario.deEmail }}</td>
+                <td>{{ usuario.noUsuario }}</td>
+                <td>{{ getPerfil(usuario.idPerfilAcesso) }}</td>
+                <td>
+
+                </td>
+                <td>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
