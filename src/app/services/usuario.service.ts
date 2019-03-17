@@ -18,4 +18,8 @@ export class UsuarioService {
   postUsuario(usuarioExterno: UsuarioExterno) {
     return this.http.post('http://localhost:8080/usuario-externo', usuarioExterno);
   }
+
+  deleteUsuario(nuCpf: string) {
+    return this.http.delete('http://localhost:8080/usuario-externo/' + nuCpf);
+  }
 }

@@ -1,3 +1,4 @@
+import { UsuarioExterno } from './../../models/usuario';
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -8,7 +9,11 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class ListaUsuariosComponent implements OnInit {
 
-  usuarios: any[] = [];
+  usuarios: UsuarioExterno[] = [];
+  usuarioSelecionado: UsuarioExterno = new UsuarioExterno();
+
+  alertaMensagem: string;
+  alertaTipo: string;
 
   constructor(
     private usuarioService: UsuarioService
@@ -38,5 +43,24 @@ export class ListaUsuariosComponent implements OnInit {
       case 3:
         return 'Gestor Nacional'
     }
+  }
+
+  excluiUsuario(modal) {
+    this.usuarioService.deleteUsuario(this.usuarioSelecionado.nuCpf).subscribe(data => {
+      console.log();
+      this.exibeMensagem('success', 'Exclusão efetuada com sucesso.');
+    }, error => {
+      console.log(error);
+      this.exibeMensagem('success', 'Ocorreu um erro ao excluir usuário!');
+    }, () => this.getUsuarios());
+  }
+
+  exibeMensagem(tipo, mensagem) {
+    this.alertaTipo = tipo;
+    this.alertaMensagem = mensagem;
+    setTimeout(() => {
+      this.alertaTipo = tipo;
+      this.alertaMensagem = undefined;
+    }, 3000);
   }
 }
