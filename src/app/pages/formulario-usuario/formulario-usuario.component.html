@@ -1,0 +1,84 @@
+<div class="container-fluid">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Parâmetros</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Usuários</li>
+    </ol>
+  </nav>
+
+  <div class="alert alert-success" role="alert" *ngIf="alertaMensagem">
+    {{ alertaMensagem }}
+  </div>
+
+  <form autocomplete="off" #usuarioForm="ngForm" (ngSubmit)="incluirUsuario(usuarioForm)">
+    <div class="card">
+      <div class="card-header">
+        Incluir Usuário
+      </div>
+      <div class="card-body">
+        <h6>* Campos Obrigatórios</h6>
+        <br>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="deEmail">Email: *</label>
+              <input type="email" class="form-control" id="deEmail" name="deEmail" required
+                [(ngModel)]="usuario.deEmail">
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="noUsuario">Nome: *</label>
+              <input type="text" class="form-control" id="noUsuario" name="noUsuario" required
+                [(ngModel)]="usuario.noUsuario">
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="form-group">
+              <label for="nuCpf">CPF: *</label>
+              <input type="text" class="form-control" id="nuCpf" name="nuCpf" required [(ngModel)]="usuario.nuCpf"
+                [textMask]="{mask: cpfMask, guide: false}" minlength="14">
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="form-group">
+              <label for="nuTelefone">Telefone: *</label>
+              <input type="text" class="form-control" id="nuTelefone" name="nuTelefone" [(ngModel)]="usuario.nuTelefone"
+                [textMask]="{mask: telefoneMask}">
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label for="coFuncao">Função: *</label>
+              <select class="form-control" id="coFuncao" name="coFuncao" required
+                [(ngModel)]="usuario.funcaoUsuarioExterno.coFuncao">
+                <option>Selecione uma opção</option>
+                <option *ngFor="let funcao of funcoes" [value]="funcao.coFuncao">{{ funcao.noFuncao }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label for="idPerfilAcesso">Perfil:</label>
+              <select class="form-control" id="idPerfilAcesso" name="idPerfilAcesso" required
+                [(ngModel)]="usuario.idPerfilAcesso">
+                <option>Selecione uma opção</option>
+                <option value="0">Aluno</option>
+                <option value="1">Gestor Municipal</option>
+                <option value="2">Gestor Estadual</option>
+                <option value="3">Gestor Nacional</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary float-right">Salvar</button>
+        <!-- <button type="submit" class="btn btn-primary float-right">Pesquisar</button> -->
+      </div>
+    </div>
+  </form>
+</div>
