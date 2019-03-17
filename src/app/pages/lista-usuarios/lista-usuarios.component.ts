@@ -52,7 +52,10 @@ export class ListaUsuariosComponent implements OnInit {
     }, error => {
       console.log(error);
       this.exibeMensagem('success', 'Ocorreu um erro ao excluir usuário!');
-    }, () => this.getUsuarios());
+    }, () => {
+      this.usuarioSelecionado = new UsuarioExterno();
+      this.getUsuarios()
+    });
   }
 
   exibeMensagem(tipo, mensagem) {
@@ -62,5 +65,23 @@ export class ListaUsuariosComponent implements OnInit {
       this.alertaTipo = tipo;
       this.alertaMensagem = undefined;
     }, 3000);
+  }
+
+  habilitaDesabilitaUsuario(usuario) {
+    this.usuarioSelecionado = usuario;
+
+    this.usuarioService.putHabilitaDesabilitaUsuario(usuario.nuCpf).subscribe(data => {
+      if ((data as UsuarioExterno).icSituacao === 'A') {
+        this.exibeMensagem('success', 'Usuário desabilitado com sucesso!');
+      } else {
+        this.exibeMensagem('success', 'Usuário habilitado com sucesso!');
+      }
+    }, error => {
+      console.log(error);
+      this.exibeMensagem('danger', 'Ocorreu um erro ao atualizar usuário!')
+    }, () => {
+      this.usuarioSelecionado = new UsuarioExterno();
+      this.getUsuarios();
+    })
   }
 }

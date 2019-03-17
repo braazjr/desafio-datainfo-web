@@ -20,6 +20,10 @@ export class UsuarioService {
   }
 
   deleteUsuario(nuCpf: string) {
-    return this.http.delete('http://localhost:8080/usuario-externo/' + nuCpf);
+    return this.http.delete(`http://localhost:8080/usuario-externo/${nuCpf}`);
+  }
+
+  putHabilitaDesabilitaUsuario(nuCpf: string) {
+    return this.http.put(`http://localhost:8080/usuario-externo/${nuCpf}/habilita-desabilita`, null);
   }
 }
