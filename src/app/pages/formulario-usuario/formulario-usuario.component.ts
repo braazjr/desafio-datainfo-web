@@ -2,6 +2,8 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { UsuarioExterno } from './../../models/usuario';
 import { FuncaoUsuarioService } from './../../services/funcao-usuario.service';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-formulario-usuario',
@@ -13,6 +15,7 @@ export class FormularioUsuarioComponent implements OnInit {
   funcoes: any[] = [];
   usuario: UsuarioExterno = new UsuarioExterno();
   alertaMensagem: string;
+  nuCpf: string;
 
   cpfMask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
   telefoneMask = ['(', /[1-9]/, /\d/, ')', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
@@ -20,8 +23,17 @@ export class FormularioUsuarioComponent implements OnInit {
   constructor(
     private funcaoUsuarioService: FuncaoUsuarioService,
     private cdr: ChangeDetectorRef,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
+    console.log(this.route.params['value'].nuCpf)
+    if (this.nuCpf = this.route.params['value'].nuCpf) {
+      this.usuarioService.getUsuarioExterno(this.nuCpf).subscribe(data => {
+        console.log(data);
+        this.usuario = data as UsuarioExterno;
+      }, error => console.log(error));
+    }
   }
 
   ngOnInit() {
@@ -41,19 +53,29 @@ export class FormularioUsuarioComponent implements OnInit {
     })
   }
 
-  incluirUsuario(usuarioForm) {
+  salvaUsuario(usuarioForm) {
     console.log(usuarioForm);
 
     if (usuarioForm.valid) {
       this.usuario.nuCpf = this.getSomenteNumeros(this.usuario.nuCpf);
       this.usuario.nuTelefone = this.getSomenteNumeros(this.usuario.nuTelefone);
 
-      this.usuarioService.postUsuario(this.usuario).subscribe(data => {
-        console.log(data);
-        this.exibeMensagem('Cadastro efetuado com sucesso!');
-        usuarioForm.reset();
-        this.usuario = new UsuarioExterno();
-      })
+      if (this.nuCpf) {
+        this.usuarioService.putUsuarioExterno(this.nuCpf, this.usuario).subscribe(data => {
+          console.log(data);
+          this.exibeMensagem('Alteração efetuada com sucesso!');
+          this.router.navigate(['/formulario-usuario']);
+          usuarioForm.reset();
+          this.usuario = new UsuarioExterno();
+        })
+      } else {
+        this.usuarioService.postUsuario(this.usuario).subscribe(data => {
+          console.log(data);
+          this.exibeMensagem('Cadastro efetuado com sucesso!');
+          usuarioForm.reset();
+          this.usuario = new UsuarioExterno();
+        })
+      }
     }
   }
 

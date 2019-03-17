@@ -90,7 +90,10 @@
                     (click)="habilitaDesabilitaUsuario(usuario)">Desabilitado</span>
                 </td>
                 <td>
-                  <a class="pointer" data-toggle="modal" data-target="#exclusaoModal"
+                  <a class="pointer shortcut" [routerLink]="['/formulario-usuario', usuario.nuCpf]">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </a>
+                  <a class="pointer shortcut" data-toggle="modal" data-target="#exclusaoModal"
                     (click)="usuarioSelecionado = usuario">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                   </a>

@@ -39,4 +39,12 @@ export class UsuarioService {
   putHabilitaDesabilitaUsuario(nuCpf: string) {
     return this.http.put(`http://localhost:8080/usuario-externo/${nuCpf}/habilita-desabilita`, null);
   }
+
+  getUsuarioExterno(nuCpf: string) {
+    return this.http.get(`http://localhost:8080/usuario-externo/${nuCpf}`);
+  }
+
+  putUsuarioExterno(nuCpf: string, usuarioExterno: UsuarioExterno) {
+    return this.http.put(`http://localhost:8080/usuario-externo/${nuCpf}`, usuarioExterno);
+  }
 }

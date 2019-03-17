@@ -6,7 +6,8 @@ import { FormularioUsuarioComponent } from './pages/formulario-usuario/formulari
 
 const routes: Routes = [
   { path: 'lista-usuarios', component: ListaUsuariosComponent },
-  { path: 'formulario-usuario', component: FormularioUsuarioComponent }
+  { path: 'formulario-usuario', component: FormularioUsuarioComponent },
+  { path: 'formulario-usuario/:nuCpf', component: FormularioUsuarioComponent }
 ];
 
 @NgModule({
