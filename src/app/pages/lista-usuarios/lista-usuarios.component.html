@@ -10,7 +10,7 @@
 </div>
 
 <div class="container-fluid">
-  <!-- <div class="card">
+  <div class="card">
     <div class="card-header">
       Lista de Usuários
     </div>
@@ -20,42 +20,40 @@
           <div class="col-6">
             <div class="form-group">
               <label for="nome">Nome:</label>
-              <input type="text" class="form-control" id="nome">
+              <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="filter.nome">
             </div>
           </div>
           <div class="col-3">
             <div class="form-group">
               <label for="situacao">Situação:</label>
-              <select class="form-control" id="situacao">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+              <select class="form-control" id="situacao" name="situacao" [(ngModel)]="filter.situacao">
+                <option value="">Todos</option>
+                <option value="A">Habilitado</option>
+                <option value="I">Desabilitado</option>
               </select>
             </div>
           </div>
           <div class="col-3">
             <div class="form-group">
-              <label for="perfil">Perfil:</label>
-              <select class="form-control" id="perfil">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+              <label for="coFuncao">Função: *</label>
+              <select class="form-control" id="idPerfilAcesso" name="perfil" [(ngModel)]="filter.perfil">
+                <option value="">Todos</option>
+                <option value="0">Aluno</option>
+                <option value="1">Gestor Municipal</option>
+                <option value="2">Gestor Estadual</option>
+                <option value="3">Gestor Nacional</option>
               </select>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-12">
-            <button type="submit" class="btn btn-primary float-right">Pesquisar</button>
+            <button class="btn btn-primary float-right" (click)="getUsuarios()">Pesquisar</button>
           </div>
         </div>
       </form>
     </div>
-  </div> -->
+  </div>
 
   <div class="card">
     <div class="card-body">
@@ -63,9 +61,9 @@
         <div class="col-6">
           <button type="button" class="btn btn-primary float-left" routerLink="/formulario-usuario">Incluir</button>
         </div>
-        <div class="col-6">
+        <!-- <div class="col-6">
           <button type="submit" class="btn btn-primary float-right">Pesquisar</button>
-        </div>
+        </div> -->
       </div>
       <br>
       <div class="row">
@@ -87,9 +85,9 @@
                 <td>{{ getPerfil(usuario.idPerfilAcesso) }}</td>
                 <td>
                   <span class="badge badge-success pointer" *ngIf="usuario.icSituacao === 'A'"
-                    (click)="habilitaDesabilitaUsuario(usuario)">Ativo</span>
+                    (click)="habilitaDesabilitaUsuario(usuario)">Habilitado</span>
                   <span class="badge badge-danger pointer" *ngIf="usuario.icSituacao === 'I'"
-                    (click)="habilitaDesabilitaUsuario(usuario)">Inativo</span>
+                    (click)="habilitaDesabilitaUsuario(usuario)">Desabilitado</span>
                 </td>
                 <td>
                   <a class="pointer" data-toggle="modal" data-target="#exclusaoModal"

@@ -1,6 +1,7 @@
+import { UsuarioFilter } from './../models/usuarioFilter';
 import { UsuarioExterno } from './../models/usuario';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,20 @@ export class UsuarioService {
     private http: HttpClient
   ) { }
 
-  getUsuarios() {
-    return this.http.get('http://localhost:8080/usuario-externo');
+  getUsuarios(filter: UsuarioFilter) {
+    let params = new HttpParams();
+    if (filter.nome)
+      params = params.append('nome', filter.nome);
+    if (filter.perfil)
+      params = params.append('perfil', filter.perfil);
+    if (filter.situacao)
+      params = params.append('situacao', filter.situacao);
+
+    console.log(params.toString())
+
+    console.log(params.toString())
+
+    return this.http.get(`http://localhost:8080/usuario-externo${params ? `?${params.toString()}` : ''}`);
   }
 
   postUsuario(usuarioExterno: UsuarioExterno) {

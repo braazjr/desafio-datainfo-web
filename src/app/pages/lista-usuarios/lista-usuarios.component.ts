@@ -1,3 +1,6 @@
+import { UsuarioFilter } from './../../models/usuarioFilter';
+import { FuncaoUsuarioService } from './../../services/funcao-usuario.service';
+import { FuncaoUsuarioExterno } from './../../models/funcao';
 import { UsuarioExterno } from './../../models/usuario';
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -11,20 +14,24 @@ export class ListaUsuariosComponent implements OnInit {
 
   usuarios: UsuarioExterno[] = [];
   usuarioSelecionado: UsuarioExterno = new UsuarioExterno();
+  funcoes: FuncaoUsuarioExterno[] = [];
+  filter: UsuarioFilter = new UsuarioFilter();
 
   alertaMensagem: string;
   alertaTipo: string;
 
   constructor(
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private funcaoUsuarioService: FuncaoUsuarioService
   ) { }
 
   ngOnInit() {
     this.getUsuarios();
+    this.getFuncoesUsuario();
   }
 
   getUsuarios() {
-    this.usuarioService.getUsuarios().subscribe(data => {
+    this.usuarioService.getUsuarios(this.filter).subscribe(data => {
       console.log(data);
       this.usuarios = data as any[];
     }, error => {
@@ -82,6 +89,15 @@ export class ListaUsuariosComponent implements OnInit {
     }, () => {
       this.usuarioSelecionado = new UsuarioExterno();
       this.getUsuarios();
+    })
+  }
+
+  getFuncoesUsuario() {
+    this.funcaoUsuarioService.getFuncoesUsuario().subscribe(data => {
+      console.log(data);
+      this.funcoes = data as any[];
+    }, error => {
+      console.log(error);
     })
   }
 }
